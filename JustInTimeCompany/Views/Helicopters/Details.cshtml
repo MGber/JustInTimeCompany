@@ -1,0 +1,27 @@
+﻿@model JustInTimeCompany.Models.ViewModels.HelicopterDetailsViewModel
+
+<div class="row">
+    <div class="col-md-6 text-center">
+        <table class="table table-bordered table-striped align-text-top">
+            <thead>
+            <tr>
+                <td>Model</td>
+                <td>Engine</td>
+                <td>Seat count</td>
+                <td>Flight count</td>
+                <td>Speed (Km/h)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="align-middle">
+                <td>@Model.Helicopter!.Model</td>
+                <td>@Model.Helicopter.Engine</td>
+                <td>@Model.Helicopter.SeatCount</td>
+                <td>@Model.Helicopter.FlightCount / 5</td>
+                <td>@Model.Helicopter.Speed</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<a class="btn btn-outline-info justify-content-start" href="@Url.Action("Details", "Flights", new {flightId = Model.FlightId})">Return to flight</a>

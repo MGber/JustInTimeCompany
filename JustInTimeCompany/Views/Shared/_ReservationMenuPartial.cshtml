@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (User.IsInRole("User"))
+{
+    <div class="dropdown my-auto">
+        <a class="btn btn-outline-light me-2 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            Book
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" asp-controller="Reservations" asp-action="Index">My books</a></li>
+        </ul>
+    </div>
+}

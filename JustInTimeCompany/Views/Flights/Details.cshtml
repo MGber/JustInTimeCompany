@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model JustInTimeCompany.Models.Flight
+@inject SignInManager<ApplicationUser> SignInManager;
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Flight</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ScheduledDeparture)
+        </dt>
+
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ScheduledDeparture)
+        </dd>
+        @if (Model.RealDeparture != null)
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.RealDeparture)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.RealDeparture)
+            </dd>
+        }
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ScheduledArrival)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ScheduledArrival)
+        </dd>
+        @if (Model.RealArrival != null) 
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.RealArrival)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.RealArrival)
+            </dd>
+        }
+        @if (Model.WasLate)
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.DelayReason)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.DelayReason)
+            </dd>
+            <dt class="col-sm-2">
+                Helicopter
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Helicopter.Model
+            </dd>
+        }
+        <dt class = "col-sm-2">
+            From
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.From.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            To
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.To.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Used seats
+        </dt>
+        @{
+            var seatCount = Model.GetSeatCount();
+        }
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => seatCount)
+        </dd>
+        <dt class = "col-sm-2">
+            Pilot
+        </dt>
+        <dd class="col-sm-10">
+            @{ var fullname = Model.GetPilotFullName();}
+            @Html.DisplayFor(model => fullname)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-info" asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-secondary" asp-action="Details" asp-controller="Helicopters" asp-route-helicopterId="@Model!.Helicopter.Id" asp-route-flightId="@Model.Id">Helicopter details</a>
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator") || User.IsInRole("Pilot"))
+    {
+        <a class="btn btn-outline-warning" asp-action="Edit" asp-route-flightId="@Model?.Id">Edit</a>
+    }
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+    {
+        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-flightId="@Model?.Id">Delete</a>
+    }
+</div>

@@ -1,0 +1,51 @@
+﻿@model JustInTimeCompany.Models.ViewModels.ReservationListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-5">My books</h1>
+
+<form id="myForm" method="get" asp-action="Index" class="col-md-1">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Time filter
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton1">
+            <li>@Html.ActionLink("All", "Index", new {reservationFilter = "All"}, new {@class="dropdown-item"})</li>
+            <li>@Html.ActionLink("Past", "Index", new {reservationFilter = "Past"}, new {@class="dropdown-item"})</li>
+            <li>@Html.ActionLink("Future", "Index", new {reservationFilter = "Future"}, new {@class="dropdown-item"})</li>
+        </ul>
+    </div>
+</form>
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr class="align-middle text-center">
+        <th>Seats</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.FlightReservations)
+    {
+        <tr class="align-middle text-center">
+            <th class="align-middle">@item.Value.SeatAmount</th>
+            <th>@item.Key.From.Name</th>
+            <th>@item.Key.To.Name</th>
+            <th>@item.Key.ScheduledDeparture</th>
+            <th>@item.Key.ScheduledArrival</th>
+            <th><button onclick="location.href = '@Url.Action("Edit", "Reservations", new {reservationId = @item.Value.Id})'" type="button" class="btn btn-outline-info">Edit</button></th>
+            <th><button onclick="location.href = '@Url.Action("Delete", "Reservations", new {reservationId = @item.Value.Id})'" type="button" class="btn btn-outline-danger">Delete</button></th>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts
+{
+} 

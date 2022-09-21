@@ -1,0 +1,17 @@
+﻿[Admin]
+1)	Login : money
+	Password : Test1234/
+[Pilots]
+1)	Login : danbal
+	Password : Test1234/
+2)	Login : thisab
+	Password : Test1234/
+3)	Login : elicop
+	Password : Test1234/
+[Users]
+1)	Login : maxgab
+	Password : Test1234/
+2)	Login : flogab
+	Password : Test1234/
+3)	Login : chrgab
+	Password : Test1234/

@@ -1,0 +1,55 @@
+﻿@model JustInTimeCompany.Models.ViewModels.ManyFlightsViewModel
+
+
+<div class="col-md-4 mx-auto">
+    <form asp-action="CreateMany">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating">
+            <select class="form-control" asp-for="From.Id" asp-items="@(new SelectList(ViewBag.Airports, "Id", "Name"))"></select>
+            <label asp-for="From"></label>
+            <span class="text-danger" asp-validation-for="From" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <select class="form-control" asp-for="To.Id" asp-items="@(new SelectList(ViewBag.Airports, "Id", "Name"))"></select>
+            <label asp-for="To"></label>
+            <span class="text-danger" asp-validation-for="To" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <select class="form-control" asp-for="Pilot.Id" asp-items="@(new SelectList(ViewBag.Pilots, "Id", "FirstName"))"></select>
+            <label asp-for="Pilot"></label>
+            <span class="text-danger" asp-validation-for="Pilot" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <select class="form-control" asp-for="Helicopter.Id" asp-items="@(new SelectList(ViewBag.Helicopters, "Id", "Model"))"></select>
+            <label asp-for="Helicopter"></label>
+            <span class="text-danger" asp-validation-for="Helicopter" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-1">
+            <input class="form-control" asp-for="HM" type="time"/>
+            <label asp-for="HM" class="form-label"></label>
+            <span class="text-danger" asp-validation-for="HM"></span>
+        </div>
+        <div class="mb-1">
+            <label class="form-label">DayNumbers of weak <span class="text-info">press control for multi select</span></label>
+            <select asp-for="DayNumbers" class="form-select" multiple="multiple">
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+                <option value="7">Sunday</option>
+            </select>
+            <span class="text-danger" asp-validation-for="DayNumbers"></span>
+        </div>
+        <div class="mb-1 form-floating">
+            <input asp-for="EndDate" class="form-control" type="date"/>
+            <label asp-for="EndDate" class="form-label">End date</label>
+            <span class="text-danger" asp-validation-for="EndDate"></span>
+        </div>
+        <div class="form-floating">
+            <input type="submit" value="CreateMany" class="btn btn-outline-info"/>
+            <a class="btn btn-outline-warning" asp-controller="Flights" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</div>

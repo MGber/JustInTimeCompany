@@ -1,0 +1,42 @@
+﻿@model IEnumerable<JustInTimeCompany.Models.Helicopter>
+
+<div class="col-md-6 mx-auto">
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <td>Model</td>
+            <td>Engine</td>
+            <td>Speed (Km/h)</td>
+            <td>Seat count</td>
+            <td>Flight count</td>
+            <td>Status</td>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var helicopter in Model)
+            {
+                <tr>
+                    <td>@helicopter.Model</td>
+                    <td>@helicopter.Engine</td>
+                    <td>@helicopter.Speed</td>
+                    <td>@helicopter.SeatCount</td>
+                    <td>@helicopter.FlightCount</td>
+                    @if (helicopter.FlightCount == 5)
+                    {
+                        <td><span class="text-warning">@helicopter.Status</span></td>
+                    }
+                    else if(helicopter.FlightCount > 5)
+                    {
+                        <td><span class="text-danger">@helicopter.Status</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="text-success">@helicopter.Status</span></td>
+                    }
+                    <td><a class="btn btn-warning" asp-action="Clear" asp-route-helicopterId="@helicopter.Id">Clear</a></td>
+                </tr>
+                
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,46 @@
+﻿@model JustInTimeCompany.Models.ViewModels.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    
+}
+
+<h1>Edit</h1>
+
+<h4>Reservation</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            @Html.ValidationSummary(true)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FlightId" value="@Model.FlightId"/>
+            <input type="hidden" asp-for="ReservationId" value="@Model.ReservationId"/>
+            <div class="form-floating">
+                <input asp-for="SeatAmount" class="form-control"/>
+                <label asp-for="SeatAmount" class="form-label"></label>
+                <span asp-validation-for="SeatAmount" class="text-danger"></span>
+            </div>
+            @if (Model.Flight.ScheduledDeparture < DateTime.Now)
+            {
+                <p class="text-danger fs-4">Cannot change a past reservation</p>
+                <a class="btn btn-info" asp-action="Index">My books</a>
+            }
+            else
+            {
+                <div class="form-floating">
+                    <input type="submit" value="Save" class="btn btn-warning"/>
+                    <a class="btn btn-info" asp-action="Index">My books</a>
+                </div>
+            }
+            
+        </form>
+    </div>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

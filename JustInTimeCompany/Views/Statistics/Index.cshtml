@@ -1,0 +1,66 @@
+﻿@model JustInTimeCompany.Models.FlightStatistics
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery csrf
+
+@functions
+{
+    public string GetAntiCsrfToken()
+    {
+        return csrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<input type="hidden"  id="RequestCsrfToken" name="RequestCsrfToken" value="@GetAntiCsrfToken()"/>
+
+<h3>Statistics about JustInTimeCompany's helicopter'</h3>
+<p class="fs-4">These statistics are for monitoring our benefits and are only accessible for administrator's'</p>
+
+<div class="row">
+    <table class="col-md-6">
+        <tr>
+            <td><div id="barchart_div" style="border: 1px solid #ccc"></div></td>
+        </tr>
+    </table>
+    <div class="col-md-6 text-center">
+        <h4>There's currently <span class="text-danger">@Model.DelayedFlightsCount</span> delayed flight. </h4>
+        <table class="col-md-6 table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Pilot</th>
+                <th>Arrival date</th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                foreach (var flight in Model.DelayedFlights)
+                {
+                    var fullname = flight.GetPilotFullName();
+                    <tr>
+                        <td>@flight.From.Name</td>
+                        <td>@flight.To.Name</td>
+                        <td>@fullname</td>
+                        <td>@flight.RealArrival</td>
+                    </tr>
+                    <tr >
+                        <th colspan="4">Flight intended at @flight.RealDeparture leaved at 
+                            @flight.RealDeparture and arrived at @flight.RealArrival because : <span class="text-danger">"@flight.DelayReason"</span></th>
+                        
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="~/js/statChart.js"></script>
+    <script>loadGraph();</script>
+}
+
+

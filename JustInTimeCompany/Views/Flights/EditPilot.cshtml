@@ -1,0 +1,40 @@
+﻿@model JustInTimeCompany.Models.ViewModels.PilotEditFlightViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="text-center col-md-4 mx-auto">
+    <h1>@ViewData["Title"]</h1>
+
+    <h4>Real flight time</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form asp-action="EditPilot" method="post">
+                <input type="hidden" asp-for="FlightId" value="@Model.FlightId"/>
+                <input type="hidden" asp-for="ScheduledArrival" value="@Model.ScheduledArrival"/>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="form-floating">
+                    <input class="form-control" asp-for="Departure"/>
+                    <label asp-for="Departure"></label>
+                    <span asp-validation-for="Departure"></span>
+                </div>
+                <div class="form-floating">
+                    <input class="form-control" asp-for="Arrival"/>
+                    <label asp-for="Arrival"></label>
+                    <span asp-validation-for="Arrival"></span>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" asp-for="DelayReason"/>
+                    <label asp-for="DelayReason"></label>
+                    <span class="text-danger" asp-validation-for="DelayReason"></span>
+                </div>
+                @if (ViewBag.Message != null)
+                {}
+                <input type="submit" value="Submit" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+</div>

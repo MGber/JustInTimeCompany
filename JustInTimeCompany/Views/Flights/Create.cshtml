@@ -1,0 +1,83 @@
+﻿@model JustInTimeCompany.Models.ViewModels.FlightViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery csrf
+
+@functions
+{
+    public string GetAntiCsrfToken()
+    {
+        return csrf.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<input type="hidden" id="RequestCsrfToken" name="RequestcsrfToken" value="@GetAntiCsrfToken()"/>
+
+<div class="text-">
+    <h1>Create</h1>
+
+    <h4>Flight</h4>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4 mx-auto">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <select class="form-control" asp-for="Flight.From.Id" asp-items="@(new SelectList(Model.Airports, "Id", "Name"))"></select>
+                <label asp-for="Flight.From"></label>
+                <span asp-validation-for="Flight.From" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select class="form-control" asp-for="Flight.To.Id" asp-items="@(new SelectList(Model.Airports, "Id", "Name"))"></select>
+                <label asp-for="Flight.To"></label>
+                <span asp-validation-for="Flight.To" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select id="pilots" class="form-control" asp-for="Flight.Pilot.Id">
+                </select>
+                <label asp-for="Flight.Pilot"></label>
+                <span asp-validation-for="Flight.Pilot" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select class="form-control" asp-for="Flight.Helicopter.Id" asp-items="@(new SelectList(Model.Helicopters, "Id", "Model"))"></select>
+                <label asp-for="Flight.Helicopter"></label>
+                <span asp-validation-for="Flight.Helicopter" class="text-danger"></span>
+            </div>
+            @{
+                string date;
+                if (Model.Flight != null && Model.Flight.ScheduledDeparture != null)
+                {
+                     date = Model.Flight.ScheduledDeparture.ToString("yyyy-MM-ddTHH:mm");
+                }
+                else
+                {
+                    date = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+                }
+            }
+            <div class="form-floating">
+                    <input id="selectedDate" asp-for="Flight.ScheduledDeparture" class="form-control" value="@date"/>
+                    <label asp-for="Flight.ScheduledDeparture"></label>
+                    <span asp-validation-for="Flight.ScheduledDeparture" class="text-danger"></span>
+                </div>
+            <div class="form-floating">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/PilotsForDate.js"></script>
+    <script>loadPilots();</script>
+}

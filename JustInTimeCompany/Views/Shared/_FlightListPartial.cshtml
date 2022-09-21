@@ -1,0 +1,48 @@
+﻿@model IEnumerable<JustInTimeCompany.Models.Flight> 
+
+
+<p class="fs-5">Feel free to go to the details section or to book a flight.</p>
+<div class="text-center">
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+            <th>Pilot</th>
+            <th>Seats</th>
+            <th>Distance</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        </thead>
+        <tbody>
+        @foreach (var flight in Model)
+        {
+            var seatCount = flight.GetSeatCount();
+            var departure = flight.ScheduledDeparture.ToString("dd/MM/yyyy HH\\hmm");
+            var arrival = flight.ScheduledArrival.Value.ToString("dd/MM/yyyy HH\\hmm");
+            var distance = flight.DistanceKm();
+            var fullname = flight.GetPilotFullName();
+            <tr class="pe-auto ">
+                <td>@flight.From.Name</td>
+                <td>@flight.To.Name</td>
+                <td>@flight.ScheduledDeparture</td>
+                <td>@flight.ScheduledArrival</td>
+                <td>@fullname</td>
+                <td>@flight.GetSeatCount()</td>
+                <td>@distance</td>
+                <td>
+                    <button class="btn btn-outline-success" onclick="location.href = '@Url.Action("Create", "Reservations", new { flightId = flight.Id })'">Booking</button>
+                </td>
+                <td>
+                    <button class="btn btn-outline-info" onclick="location.href = '@Url.Action("Details", "Flights", new { flightId = flight.Id })'">Details</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

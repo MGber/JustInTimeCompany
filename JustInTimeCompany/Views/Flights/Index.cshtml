@@ -1,0 +1,28 @@
+﻿@model JustInTimeCompany.Models.ViewModels.FlightListViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-md-4 mx-auto text-center">
+    <h1>Index</h1>
+
+    <form asp-action="Index" method="get">
+        <div class="">
+            <div class="input-group mb-3">
+                @Html.DropDownList("placeMode", new SelectList(ViewBag.PlaceMode), new {@class="form-control mb-1"})
+                @Html.DropDownList("placeId", new SelectList(Model.Airports,"Id", "Name"), new {@class="form-control mb-1"})
+            </div>
+            <div class="input-group mb-2">
+                @Html.DropDownList("dateMode", new SelectList(ViewBag.DateMode), new {@class="form-control mb-1"})
+                <input name="selectedDate" type="date" class="form-control mb-1"/>
+         
+            </div>
+            <div class="input-group text-center justify-content-evenly">
+                <button type="submit" class="btn btn-outline-primary">Filter</button>
+                <button type="reset" class="btn btn-outline-warning">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@await Html.PartialAsync("_FlightListPartial", Model.Flights!.ToList())

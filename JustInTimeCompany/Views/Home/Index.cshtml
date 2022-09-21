@@ -1,0 +1,57 @@
+﻿@model JustInTimeCompany.Models.ViewModels.FlightListViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="">
+    <h1 class="display-4">Welcome to Jitc</h1>
+    <div class="col-md-6">
+        @if (@Model.UserMessages.Count() > 0)
+{
+    
+        @foreach(var message in Model.UserMessages)
+        {
+            <div class="alert alert-warning d-flex justify-content-between" role="alert">
+                <div>@message.Message </div><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+}
+</div>
+    <p class="fs-4">We offer a passenger helicopter service to allow our customers to move around without worrying about traffic jams.
+        We offer weekly flights, as well as flights on fixed dates. Feel free to book a flight.
+        You can contact us at the following email address: contact@jitc.com or call our customer service at +32 491 48 57 40</p>
+    <h2 class="display-6">Served airports</h2>
+    <div class="row justify-content-start">
+        <div class="text-center col-md-5 align-items-end">
+            <table class="table table-striped table-bordered text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Airport</th>
+                    <th scope="col">Latitude</th>
+                    <th scope="col">Longitude</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (Model.Airports is not null)
+                {
+                    @foreach (var airport in Model.Airports)
+                    {
+                        <tr>
+                            <th>@Html.DisplayFor(airports => airport.Name)</th>
+                            <th>@Html.DisplayFor(airports => airport.Latitude)°</th>
+                            <th>@Html.DisplayFor(airports => airport.Longitude)°</th>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+        <img class="rounded-pill col-md-4 mx-auto d-block" src="~/myLib/homePicture.jpeg" alt="cannot load image"/>
+    </div>
+    <h2 class="display-6">Next flights</h2>
+    @await Html.PartialAsync("_FlightListPartial", Model.Flights!.ToList())
+</div>
+
+@section Scripts
+{
+    
+}
